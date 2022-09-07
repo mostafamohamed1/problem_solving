@@ -527,7 +527,7 @@ console.log(Kata.getVolumeOfCuboid(6.3, 2, 5));
 
 // =========================================================================================
 /*
-  Build a pile of Cubes
+Build a pile of Cubes
 
   Your task is to construct a building which will be a pile of n cubes. The cube at the bottom will have a volume of n^3, the cube above will have volume of (n-1)^3 and so on until the top which will have a volume of 1^3.
 
@@ -553,3 +553,125 @@ console.log(findNb(4183059834009));
 // console.log(findNb(24723578342962));
 // console.log(findNb(135440716410000));
 // console.log(findNb(40539911473216));
+
+// =========================================================================================
+/*
+Beginner Series #4 Cockroach
+  
+  The cockroach is one of the fastest insects. Write a function which takes its speed in km per hour and returns it in cm per second, rounded down to the integer (= floored).
+  
+  For example:
+  1.08 --> 30
+  */
+
+function cockroachSpeed(s) {
+  return Math.floor((s * 100000) / 3600); // s * 100000 = cm / 3600 is hour in seconds
+}
+
+// =========================================================================================
+/*
+Equal Sides Of An Array
+
+  You are going to be given an array of integers. Your job is to take that array and find an index N where the sum of the integers to the left of N is equal to the sum of the integers to the right of N. If there is no index that would make this happen, return -1.
+
+  For example:
+
+  Let's say you are given the array {1,2,3,4,3,2,1}:
+  Your function will return the index 3, because at the 3rd position of the array, the sum of left side of the index ({1,2,3}) and the sum of the right side of the index ({3,2,1}) both equal 6.
+*/
+
+function findEvenIndex(arr) {
+  const sum = (arr) => arr.reduce((acc, cur) => acc + cur, 0);
+  return arr.findIndex(
+    (val, idx) => sum(arr.slice(0, idx)) === sum(arr.slice(idx + 1)),
+  );
+}
+
+console.log(findEvenIndex([1, 100, 50, -51, 1, 1]));
+
+// =========================================================================================
+/*
+Thinkful - Logic Drills: Traffic light
+
+  You're writing code to control your town's traffic lights. You need a function to handle each change from green, to yellow, to red, and then to green again.
+
+  Complete the function that takes a string as an argument representing the current state of the light and returns a string representing the state the light should change to.
+
+  For example, when the input is green, output should be yellow.
+*/
+function updateLight(current) {
+  return current == 'green'
+    ? 'yellow'
+    : current == 'yellow'
+    ? 'red'
+    : current == 'red'
+    ? 'green'
+    : '';
+}
+// =========================================================================================
+
+/*
+Reversed sequence
+
+  Build a function that returns an array of integers from n to 1 where n>0.
+
+  Example : n=5 --> [5,4,3,2,1]
+  
+  */
+
+const reverseSeq = (n) => {
+  let arr = [];
+  for (let i = n; i > 0; i--) arr.push(i);
+  return arr;
+};
+
+console.log(reverseSeq(5));
+// =========================================================================================
+
+/*
+Two Sum
+
+  Write a function that takes an array of numbers (integers for the tests) and a target number. It should find two different items in the array that, when added together, give the target value. The indices of these items should then be returned in a tuple / list (depending on your language) like so: (index1, index2).
+
+*/
+
+function twoSum(numbers, target) {
+  for (let i = 0; i < numbers.length; i++) {
+    for (let j = 1; j < numbers.length; j++) {
+      let index1 = numbers[i];
+      let index2 = numbers[j];
+      if (index1 + index2 === target) {
+        return [i, j];
+      }
+    }
+  }
+}
+
+console.log(twoSum([1, 2, 3], 4));
+// =========================================================================================
+/*
+  Delete occurrences of an element if it occurs more than n times
+
+  Given a list and a number, create a new list that contains each number of list at most N times, without reordering.
+  For example if the input number is 2, and the input list is [1,2,3,1,2,1,2,3], you take [1,2,3,1,2], drop the next [1,2] since this would lead to 1 and 2 being in the result 3 times, and then take 3, which leads to [1,2,3,1,2,3].
+  With list [20,37,20,21] and number 1, the result would be [20,37,21].
+*/
+
+function deleteNth(arr, n) {
+  let newArr = [];
+  let freqObj = {};
+  for (let i = 0; i < arr.length; i++) {
+    if (!freqObj[arr[i]]) freqObj[arr[i]] = 0;
+    if (freqObj[arr[i]] != n) freqObj[arr[i]]++;
+  }
+
+  for (let i = 0; i < arr.length; i++) {
+    if (freqObj[arr[i]] != 0) {
+      newArr.push(arr[i]);
+      freqObj[arr[i]]--;
+    }
+  }
+  return newArr;
+}
+
+console.log(deleteNth([1, 2, 3, 1, 2, 1, 2, 3], 2));
