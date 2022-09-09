@@ -675,3 +675,131 @@ function deleteNth(arr, n) {
 }
 
 console.log(deleteNth([1, 2, 3, 1, 2, 1, 2, 3], 2));
+
+// =========================================================================================
+/*
+The highest profit wins!
+
+  Story
+  Ben has a very simple idea to make some profit: he buys something and sells it again. Of course, this wouldn't give him any profit at all if he was simply to buy and sell it at the same price. Instead, he's going to buy it for the lowest possible price and sell it at the highest.
+
+
+  Task
+  Write a function that returns both the minimum and maximum number of the given list/array.
+
+  Examples (Input --> Output)
+    [1,2,3,4,5] --> [1,5]
+    [2334454,5] --> [5,2334454]
+    [1]         --> [1,1]
+*/
+
+function minMax(arr) {
+  return [Math.min(...arr), Math.max(...arr)];
+}
+
+console.log(minMax([1, 2, 3, 4, 5]));
+
+// =========================================================================================
+/*
+Find the next perfect square!
+
+  You might know some pretty large perfect squares. But what about the NEXT one?
+  Complete the findNextSquare method that finds the next integral perfect square after the one passed as a parameter. Recall that an integral perfect square is an integer n such that sqrt(n) is also an integer.
+  If the parameter is itself not a perfect square then -1 should be returned. You may assume the parameter is non-negative.
+  Examples:(Input --> Output)
+
+  121 --> 144
+  625 --> 676
+  114 --> -1 since 114 is not a perfect square
+
+*/
+
+function findNextSquare(sq) {
+  // Return the next square if sq is a perfect square, -1 otherwise
+  let isIntegerNumber = Math.sqrt(sq) % 1 === 0;
+  if (isIntegerNumber) {
+    return (Math.sqrt(sq) + 1) * (Math.sqrt(sq) + 1);
+  }
+  return -1;
+}
+
+console.log(findNextSquare(114));
+
+// =========================================================================================
+/*
+Removing Elements
+
+Take an array and remove every second element from the array. Always keep the first element and start removing with the next element.
+
+Example:
+["Keep", "Remove", "Keep", "Remove", "Keep", ...] --> ["Keep", "Keep", "Keep", ...]
+
+*/
+
+function removeEveryOther(arr) {
+  return arr.filter((el, i) => (i + 1) % 2 != 0);
+}
+
+console.log(removeEveryOther(['keep', 'remove', 'keep', 'remove']));
+
+// =========================================================================================
+
+/*
+Find the stray number
+You are given an odd-length array of integers, in which all of them are the same, except for one single number.
+Complete the method which accepts such an array, and returns that single different number.
+The input array will always be valid! (odd-length >= 3)
+
+Examples
+  [1, 1, 2] ==> 2
+  [17, 17, 3, 17, 17, 17, 17] ==> 3
+*/
+
+function stray(numbers) {
+  return numbers.filter(
+    (el, i, arr) => arr.indexOf(el) === arr.lastIndexOf(el),
+  )[0];
+}
+
+console.log(stray([1, 1, 2]));
+
+// =========================================================================================
+/*
+  Mexican Wave
+  Task
+  In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up. 
+
+  Rules
+  1.  The input string will always be lower case but maybe empty.
+  2.  If the character in the string is whitespace then pass over it as if it was an empty seat
+
+*/
+
+function wave(str) {
+  let arr = [];
+  for (let i = 0; i < str.length; i++) {
+    let result = '';
+    if (str[i] != ' ') {
+      for (let k = 0; k < str.length; k++) {
+        if (k == i) {
+          result += str[k].toUpperCase();
+        } else {
+          result += str[k];
+        }
+      }
+    } else {
+      continue;
+    }
+
+    arr.push(result);
+  }
+  return arr;
+}
+
+function wave2(str) {
+  return [...str]
+    .map((el, i) => str.slice(0, i) + el.toUpperCase() + str.slice(i + 1))
+    .filter((el) => el != str);
+}
+
+console.log(wave2('hello world'));
