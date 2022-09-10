@@ -765,7 +765,7 @@ console.log(stray([1, 1, 2]));
 
 // =========================================================================================
 /*
-  Mexican Wave
+Mexican Wave
   Task
   In this simple Kata your task is to create a function that turns a string into a Mexican Wave. You will be passed a string and you must return that string in an array where an uppercase letter is a person standing up. 
 
@@ -803,3 +803,123 @@ function wave2(str) {
 }
 
 console.log(wave2('hello world'));
+
+// =========================================================================================
+
+/*
+  Correct the mistakes of the character recognition software
+  Character recognition software is widely used to digitise printed texts. Thus the texts can be edited, searched and stored on a computer.
+
+  When documents (especially pretty old ones written with a typewriter), are digitised character recognition softwares often make mistakes.
+
+  Your task is correct the errors in the digitised text. You only have to handle the following mistakes:
+
+  S is misinterpreted as 5
+  O is misinterpreted as 0
+  I is misinterpreted as 1
+  The test cases contain numbers only by mistake.
+
+*/
+
+function correct(string) {
+  return string
+    .replace(/(?:0)/g, 'O')
+    .replace(/(?:1)/g, 'I')
+    .replace(/(?:5)/g, 'S');
+}
+
+function correct2(s) {
+  return [...s].map((e) => ({ 0: 'O', 1: 'I', 5: 'S' }[e] || e)).join('');
+}
+
+console.log(correct2('L0ND0N'));
+// =========================================================================================
+/*
+  Find the first non-consecutive number
+
+
+  Your task is to find the first element of an array that is not consecutive.
+  By not consecutive we mean not exactly 1 larger than the previous element of the array.
+  E.g. If we have an array [1,2,3,4,6,7,8] then 1 then 2 then 3 then 4 are all consecutive but 6 is not, so that's the first non-consecutive number.
+
+  If the whole array is consecutive then return null2.
+
+  The array will always have at least 2 elements1 and all elements will be numbers. The numbers will also all be unique and in ascending order. The numbers could be positive or negative and the first non-consecutive could be either too!
+*/
+
+function firstNonConsecutive(arr) {
+  for (let i = 0; i < arr.length; i++) {
+    if (i == 0) continue;
+    if (arr[i - 1] + 1 === arr[i]) continue;
+    else return arr[i];
+  }
+  return null;
+}
+
+console.log(firstNonConsecutive([10, 11, 12, 13, 14, 15, 16]));
+
+// =========================================================================================
+
+/*
+  factorial of 5
+  1  * 1  = 1
+  1  * 2  = 2
+  2  * 3  = 6
+  6  * 4  = 24
+  24 * 5  = 120
+
+*/
+function factorial(x) {
+  if (x == 0) {
+    return 1;
+  } else {
+    return x * factorial(x - 1);
+  }
+}
+
+console.log(factorial(5));
+
+// =========================================================================================
+/*
+  Break camelCase
+
+  Complete the solution so that the function will break up camel casing, using a space between words.
+
+  Example
+  "camelCasing"  =>  "camel Casing"
+  "identifier"   =>  "identifier"
+  ""             =>  ""
+*/
+
+// Solution 1
+function solution(s) {
+  let arr = [];
+  let word = '';
+  for (let i = 0; i < s.length; i++) {
+    if (s[i] == s[i].toUpperCase()) {
+      arr.push(word);
+      word = '';
+    }
+    word += s[i];
+    if (s.length - 1 == i) {
+      arr.push(word);
+    }
+  }
+  return arr.join(' ');
+}
+
+// Solution 2
+function solution2(s) {
+  return s.replace(/([A-Z])/g, ' $1');
+}
+
+// Solution 3
+function solution3(s) {
+  return [...s].reduce(
+    (acc, cur) =>
+      cur === cur.toUpperCase() ? (acc += ' ' + cur) : (acc += cur),
+    '',
+  );
+}
+
+console.log(solution3('camelCaseWord'));
