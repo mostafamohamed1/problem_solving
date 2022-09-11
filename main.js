@@ -1198,7 +1198,7 @@ function getPermutations(str) {
 
   const generate = (n, heapArr) => {
     if (n == 1) {
-      output.push(heapArr);
+      output.push(heapArr.slice());
       return;
     }
 
@@ -1213,7 +1213,7 @@ function getPermutations(str) {
     }
   };
 
-  generate(str.length, [...str]);
+  generate(str.length, [...str].slice());
   return [...new Set(output.map((el) => el.join('')))].sort();
 }
 
