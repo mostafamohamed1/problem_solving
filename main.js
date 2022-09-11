@@ -881,7 +881,7 @@ console.log(factorial(5));
 
 // =========================================================================================
 /*
-  Break camelCase
+Break camelCase
 
   Complete the solution so that the function will break up camel casing, using a space between words.
 
@@ -923,3 +923,298 @@ function solution3(s) {
 }
 
 console.log(solution3('camelCaseWord'));
+
+// =========================================================================================
+/*
+Testing 1-2-3
+
+  Your team is writing a fancy new text editor and you've been tasked with implementing the line numbering.
+  Write a function which takes a list of strings and returns each line prepended by the correct number.
+  The numbering starts at 1. The format is n: string. Notice the colon and space in between.
+
+  Examples: (Input --> Output)
+  [] --> []
+  ["a", "b", "c"] --> ["1: a", "2: b", "3: c"]
+*/
+
+var number = function (array) {
+  return array.map((el, i) => `${i + 1}: ${el}`);
+};
+
+console.log(number(['a', 'b', 'c']));
+
+// =========================================================================================
+/*
+Grasshopper - Check for factor
+
+This function should test if the factor is a factor of base.
+Return true if it is a factor or false if it is not.
+
+  About factors
+  Factors are numbers you can multiply together to get another number.
+
+  2 and 3 are factors of 6 because: 2 * 3 = 6
+
+  You can find a factor by dividing numbers. If the remainder is 0 then the number is a factor.
+  You can use the mod operator (%) in most languages to check for a remainder
+  For example 2 is not a factor of 7 because: 7 % 2 = 1
+
+  Note: base is a non-negative number, factor is a positive number.
+  */
+
+function checkForFactor(base, factor) {
+  return base % factor === 0;
+}
+
+console.log(checkForFactor(10, 2));
+
+// =========================================================================================
+/*
+Get the Middle Character
+
+You are going to be given a word. Your job is to return the middle character of the word. If the word's length is odd, return the middle character. If the word's length is even, return the middle 2 characters.
+
+  #Examples:
+
+  Kata.getMiddle("test") should return "es"
+  Kata.getMiddle("testing") should return "t"
+  Kata.getMiddle("middle") should return "dd"
+  Kata.getMiddle("A") should return "A"
+
+  */
+
+function getMiddle(s) {
+  let oddOrEven = s.length % 2;
+  let length = Math.floor(s.length / 2);
+  return oddOrEven === 0 ? s[length - 1] + s[length] : s[length];
+}
+
+console.log(getMiddle('testing'));
+console.log(getMiddle('test'));
+console.log(getMiddle('middle'));
+
+// =========================================================================================
+
+/*
+  Welcome
+
+  Your start-up's BA has told marketing that your website has a large audience in Scandinavia and surrounding countries. Marketing thinks it would be great to welcome visitors to the site in their own language. Luckily you already use an API that detects the user's location, so this is an easy win.
+
+  The Task
+  Think of a way to store the languages as a database (eg an object). The languages are listed below so you can copy and paste!
+  Write a 'welcome' function that takes a parameter 'language' (always a string), and returns a greeting - if you have it in your database. It should default to English if the language is not in the database, or in the event of an invalid input.
+  
+  The Database
+
+  english: 'Welcome',
+  czech: 'Vitejte',
+  danish: 'Velkomst',
+  dutch: 'Welkom',
+  estonian: 'Tere tulemast',
+  finnish: 'Tervetuloa',
+  flemish: 'Welgekomen',
+  french: 'Bienvenue',
+  german: 'Willkommen',
+  irish: 'Failte',
+  italian: 'Benvenuto',
+  latvian: 'Gaidits',
+  lithuanian: 'Laukiamas',
+  polish: 'Witamy',
+  spanish: 'Bienvenido',
+  swedish: 'Valkommen',
+  welsh: 'Croeso'
+*/
+
+let data = {
+  english: 'Welcome',
+  czech: 'Vitejte',
+  danish: 'Velkomst',
+  dutch: 'Welkom',
+  estonian: 'Tere tulemast',
+  finnish: 'Tervetuloa',
+  flemish: 'Welgekomen',
+  french: 'Bienvenue',
+  german: 'Willkommen',
+  irish: 'Failte',
+  italian: 'Benvenuto',
+  latvian: 'Gaidits',
+  lithuanian: 'Laukiamas',
+  polish: 'Witamy',
+  spanish: 'Bienvenido',
+  swedish: 'Valkommen',
+  welsh: 'Croeso',
+};
+
+function greet(language) {
+  return data[language] || data['english'];
+}
+
+console.log(greet('english'));
+console.log(greet('IP_ADDRESS_INVALID'));
+
+// =========================================================================================
+
+/*
+  Who likes it?
+
+  You probably know the "like" system from Facebook and other pages. People can "like" blog posts, pictures or other items. We want to create the text that should be displayed next to such an item.
+
+  Implement the function which takes an array containing the names of people that like an item. It must return the display text as shown in the examples:
+
+  []                                -->  "no one likes this"
+  ["Peter"]                         -->  "Peter likes this"
+  ["Jacob", "Alex"]                 -->  "Jacob and Alex like this"
+  ["Max", "John", "Mark"]           -->  "Max, John and Mark like this"
+  ["Alex", "Jacob", "Mark", "Max"]  -->  "Alex, Jacob and 2 others like this"
+*/
+
+// Solution 1
+function likes(names) {
+  return names.length == 0
+    ? 'no one likes this'
+    : names.length == 1
+    ? `${names[0]} likes this`
+    : names.length == 2
+    ? `${names[0]} and ${names[1]} like this`
+    : names.length == 3
+    ? `${names[0]}, ${names[1]} and ${names[2]} like this`
+    : `${names[0]}, ${names[1]} and ${names.length - 2} others like this`;
+}
+
+// Solution 2
+function likes2(names) {
+  return {
+    0: 'no one likes this',
+    1: `${names[0]} likes this`,
+    2: `${names[0]} and ${names[1]} like this`,
+    3: `${names[0]}, ${names[1]} and ${names[2]} like this`,
+    4: `${names[0]}, ${names[1]} and ${names.length - 2} others like this`,
+  }[Math.min(4, names.length)];
+}
+
+console.log(likes(['Alex', 'Jacob', 'Mark', 'Max']));
+
+// =========================================================================================
+/*
+Count the divisors of a number
+
+  Count the number of divisors of a positive integer n.
+
+  Random tests go up to n = 500000.
+
+  Examples (input --> output)
+
+  4 --> 3 (1, 2, 4)
+  5 --> 2 (1, 5)
+  12 --> 6 (1, 2, 3, 4, 6, 12)
+  30 --> 8 (1, 2, 3, 5, 6, 10, 15, 30)
+*/
+
+function getDivisorsCnt(n) {
+  let count = 0;
+  for (let i = 1; i <= n; i++) {
+    if (n % i == 0) {
+      count++;
+    }
+  }
+  return count;
+}
+
+function getDivisorsCnt2(n, i = 1, count = 0) {
+  if (i <= n) {
+    if (n % i == 0) {
+      return getDivisorsCnt2(n, i + 1, (count += 1));
+    }
+    return getDivisorsCnt2(n, i + 1, count);
+  } else {
+    return count;
+  }
+}
+
+console.log(getDivisorsCnt2(30));
+
+// =========================================================================================
+/*
+  Sum of two lowest positive integers
+
+  Create a function that returns the sum of the two lowest positive numbers given an array of minimum 4 positive integers. No floats or non-positive integers will be passed.
+
+  For example, when an array is passed like [19, 5, 42, 2, 77], the output should be 7.
+
+  [10, 343445353, 3453445, 3453545353453] should return 3453455.
+
+*/
+
+function sumTwoSmallestNumbers(numbers) {
+  let [one, two] = numbers.sort((a, b) => a - b);
+  return one + two;
+}
+
+console.log(sumTwoSmallestNumbers([5, 8, 12, 19, 22]));
+
+// =========================================================================================
+/*
+  Permutations
+
+  In this kata you have to create all permutations of a non empty input string and remove duplicates, if present. This means, you have to shuffle all letters from the input in all possible orders.
+
+  Examples:
+  * With input 'a'
+  * Your function should return: ['a']
+  * With input 'ab'
+  * Your function should return ['ab', 'ba']
+  * With input 'aabb'
+  * Your function should return ['aabb', 'abab', 'abba', 'baab', 'baba', 'bbaa']
+  * 
+"aabb" ,"baab" ,"abab" ,"abba" ,"baba" ,"bbaa"
+*/
+
+/*
+
+
+*/
+
+function permutations(string) {
+  let perms = string.split('').reduce((acc, element) => {
+    let updatedPerms = new Set();
+    acc.forEach((word) => {
+      for (let i = 0; i <= word.length; i++) {
+        updatedPerms.add(word.substring(0, i) + element + word.substring(i));
+      }
+    });
+    return updatedPerms;
+  }, new Set(['']));
+
+  return [...perms];
+}
+
+console.log(permutations('aabb'));
+
+function getPermutations(str) {
+  let output = [];
+  const swapInPlace = (arrToSwap, iA, iB) => {
+    [arrToSwap[iB], arrToSwap[iA]] = [arrToSwap[iA], arrToSwap[iB]];
+  };
+
+  const generate = (n, heapArr) => {
+    if (n == 1) {
+      output.push(heapArr);
+      return;
+    }
+
+    generate(n - 1, heapArr);
+    for (let i = 0; i < n - 1; i++) {
+      if (n % 2 === 0) {
+        swapInPlace(heapArr, i, n - 1);
+      } else {
+        swapInPlace(heapArr, 0, n - 1);
+      }
+      generate(n - 1, heapArr);
+    }
+  };
+
+  generate(str.length, [...str]);
+  return [...new Set(output.map((el) => el.join('')))].sort();
+}
+
+console.log(getPermutations('aabb'));
