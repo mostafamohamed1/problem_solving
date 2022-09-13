@@ -1154,7 +1154,7 @@ console.log(sumTwoSmallestNumbers([5, 8, 12, 19, 22]));
 
 // =========================================================================================
 /*
-  Permutations
+Permutations
 
   In this kata you have to create all permutations of a non empty input string and remove duplicates, if present. This means, you have to shuffle all letters from the input in all possible orders.
 
@@ -1218,3 +1218,93 @@ function getPermutations(str) {
 }
 
 console.log(getPermutations('aabb'));
+
+// =========================================================================================
+
+/*
+  Write Your Code Here to Make Condition Evaluate True
+*/
+
+// let a = {
+//   i: 1,
+//   valueOf: function () {
+//     return a.i++;
+//   },
+// };
+
+// if (a == 1 && a == 2 && a == 3) {
+//   console.log('TRUE');
+// }
+
+// let a = 1;
+
+// with ({
+//   get a() {
+//     return a++;
+//   },
+// }) {
+//   if (a == 1 && a == 2 && a == 3) console.log('Bla');
+// }
+
+// let a = '123'.match(/[123]/g);
+
+// if (a == 1 && a == 2 && a == 3) console.log('Bla');
+
+const a = {
+  i: 1,
+  [Symbol.toPrimitive]() {
+    return this.i++;
+  },
+};
+
+if (a == 1 && a == 2 && a == 3) console.log('Bla');
+
+// =========================================================================================
+
+/*
+  Range Extraction
+  A format for expressing an ordered list of integers is to use a comma separated list of either
+
+  individual integers
+  or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example "12,13,15-17"
+  Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
+
+  Example:
+
+  solution([-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]);
+  returns "-10--8,-6,-3-1,3-5,7-11,14,15,17-20"
+
+*/
+
+function solutionRange(list) {
+  let result = [];
+  let rangedObj = {};
+  let indx = 0;
+  let count = 0;
+  for (let i = 0; i < list.length; i++) {
+    if (list[i] + 1 === list[i + 1]) {
+      count++;
+    } else {
+      rangedObj[++indx] = list.slice(i - count, i + 1);
+      count = 0;
+    }
+  }
+
+  for (let [key, val] of Object.entries(rangedObj)) {
+    if (val.length <= 1) {
+      result.push(`${val}`);
+    } else if (val.length <= 2) {
+      result.push(`${val[0]}`, `${val[1]}`);
+    } else {
+      result.push(`${val[0]}-${val[val.length - 1]}`);
+    }
+  }
+
+  return result.join();
+}
+
+console.log(
+  solutionRange([
+    -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20,
+  ]),
+);
