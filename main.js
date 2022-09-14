@@ -1268,7 +1268,7 @@ if (a == 1 && a == 2 && a == 3) console.log('Bla');
   individual integers
   or a range of integers denoted by the starting integer separated from the end integer in the range by a dash, '-'. The range includes all integers in the interval including both endpoints. It is not considered a range unless it spans at least 3 numbers. For example "12,13,15-17"
   Complete the solution so that it takes a list of integers in increasing order and returns a correctly formatted string in the range format.
-
+  
   Example:
 
   solution([-10, -9, -8, -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20]);
@@ -1308,3 +1308,106 @@ console.log(
     -6, -3, -2, -1, 0, 1, 3, 4, 5, 7, 8, 9, 10, 11, 14, 15, 17, 18, 19, 20,
   ]),
 );
+
+// =========================================================================================
+/*
+Smallest possible sum
+
+  Description
+  Given an array X of positive integers, its elements are to be transformed by running the following operation on them as many times as required:
+
+  if X[i] > X[j] then X[i] = X[i] - X[j]
+
+  When no more transformations are possible, return its sum ("smallest possible sum").
+
+  For instance, the successive transformation of the elements of input X = [6, 9, 21] is detailed below:
+
+  X_1 = [6, 9, 12] # -> X_1[2] = X[2] - X[1] = 21 - 9
+  X_2 = [6, 9, 6]  # -> X_2[2] = X_1[2] - X_1[0] = 12 - 6
+  X_3 = [6, 3, 6]  # -> X_3[1] = X_2[1] - X_2[0] = 9 - 6
+  X_4 = [6, 3, 3]  # -> X_4[2] = X_3[2] - X_3[1] = 6 - 3
+  X_5 = [3, 3, 3]  # -> X_5[1] = X_4[0] - X_4[1] = 6 - 3
+
+  The returning output is the sum of the final transformation (here 9).
+
+  Example
+  solution([6, 9, 21]) #-> 9
+
+  Solution steps:
+  [6, 9, 12] #-> X[2] = 21 - 9
+  [6, 9, 6] #-> X[2] = 12 - 6
+  [6, 3, 6] #-> X[1] = 9 - 6
+  [6, 3, 3] #-> X[2] = 6 - 3
+  [3, 3, 3] #-> X[1] = 6 - 3
+
+*/
+
+function smallestPossibleSum(numbers) {
+  let len = numbers.length - 1; // 2
+  let i = len; // 2
+  while (true) {
+    let a = Math.max(...numbers), // 12 2
+      b = numbers[i]; // 12 2
+    if (a === b) {
+      // true
+      if (i == 0) {
+        // false
+        return numbers.reduce((a, b) => {
+          return a + b;
+        });
+      } else i--;
+    } else {
+      numbers.splice(numbers.indexOf(a), 1, a - b);
+      i = len;
+    }
+  }
+}
+
+console.log(smallestPossibleSum([6, 9, 12]));
+
+const gcd = (a, b) => (a ? gcd(b % a, a) : b);
+
+function smallestSum(numbers) {
+  return numbers.reduce(gcd) * numbers.length;
+}
+
+console.log(smallestSum([6, 9, 12]));
+
+// =========================================================================================
+/*
+  Counting Change Combinations
+  Write a function that counts how many different ways you can make change for an amount of money, given an array of coin denominations. For example, there are 3 ways to give change for 4 if you have coins with denomination 1 and 2:
+
+  1+1+1+1, 1+1+2, 2+2.
+  The order of coins does not matter:
+  1+1+2 == 2+1+1
+
+  Also, assume that you have an infinite amount of coins.
+  Your function should take an amount to change and an array of unique denominations for the coins:
+
+    countChange(4, [1,2]) // => 3
+    countChange(10, [5,2,3]) // => 4
+    countChange(11, [5,7]) //  => 0
+*/
+
+var countChange = function (money, coins) {
+  if (money < 0 || coins.length === 0) return 0;
+  else if (money === 0) return 1;
+  else
+    return (
+      countChange(money - coins[0], coins) + countChange(money, coins.slice(1))
+    );
+};
+
+console.log(countChange(4, [1, 2]));
+
+var countChange2 = function (money, coins) {
+  var arr = new Array(money + 1).fill(0);
+  arr[0] = 1;
+  for (let i = 0; i < arr.length; i++) {
+    for (let j = coins[i]; j <= money; j++) arr[j] += arr[j - coins[i]];
+  }
+  return arr[money];
+};
+
+console.log(countChange2(4, [1, 2]));
