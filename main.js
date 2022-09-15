@@ -1375,7 +1375,7 @@ console.log(smallestSum([6, 9, 12]));
 
 // =========================================================================================
 /*
-  Counting Change Combinations
+Counting Change Combinations
   Write a function that counts how many different ways you can make change for an amount of money, given an array of coin denominations. For example, there are 3 ways to give change for 4 if you have coins with denomination 1 and 2:
 
   1+1+1+1, 1+1+2, 2+2.
@@ -1411,3 +1411,157 @@ var countChange2 = function (money, coins) {
 };
 
 console.log(countChange2(4, [1, 2]));
+
+// =========================================================================================
+/*
+Find the odd int
+
+  Given an array of integers, find the one that appears an odd number of times.
+  
+  There will always be only one integer that appears an odd number of times.
+
+  Examples
+  [7] should return 7, because it occurs 1 time (which is odd).
+  [0] should return 0, because it occurs 1 time (which is odd).
+  [1,1,2] should return 2, because it occurs 1 time (which is odd).
+  [0,1,0,1,0] should return 0, because it occurs 3 times (which is odd).
+  [1,2,2,3,3,3,4,3,3,3,2,2,1] should return 4, because it appears 1 time (which is odd).
+*/
+
+function findOdd(A) {
+  return +Object.entries(
+    A.reduce((acc, cur) => {
+      acc[cur] ? (acc[cur] += 1) : (acc[cur] = 1);
+      return acc;
+    }, {}),
+  ).filter(([a, b]) => b % 2)[0][0];
+}
+
+console.log(findOdd([1, 2, 2, 3, 3, 3, 4, 3, 3, 3, 2, 2, 1]));
+
+function findOdd2(A) {
+  return A.reduce((a, b) => a ^ b, 0);
+}
+
+console.log(findOdd2([1, 2, 2, 3, 3, 3, 4, 3, 3, 3, 2, 2, 1]));
+
+// =========================================================================================
+/*
+Length of Last Word
+
+  Given a string s consisting of words and spaces, return the length of the last word in the string.
+  A word is a maximal substring consisting of non-space characters only.
+
+
+  Example 1:
+
+  Input: s = "Hello World"
+  Output: 5
+  Explanation: The last word is "World" with length 5.
+  Example 2:
+
+  Input: s = "   fly me   to   the moon  "
+  Output: 4
+  Explanation: The last word is "moon" with length 4.
+  Example 3:
+
+  Input: s = "luffy is still joyboy"
+  Output: 6
+  Explanation: The last word is "joyboy" with length 6.
+*/
+
+/**
+ * @param {string} s
+ * @return {number}
+ */
+var lengthOfLastWord = function (s) {
+  return s.trim().split(' ')[s.trim().split(' ').length - 1].length;
+};
+
+console.log(lengthOfLastWord('   fly me   to   the moon  '));
+
+// =========================================================================================
+/*
+Remove Duplicates from Sorted Array
+
+  Given an integer array nums sorted in non-decreasing order, remove the duplicates in-place such that each unique element appears only once. The relative order of the elements should be kept the same.
+
+  Since it is impossible to change the length of the array in some languages, you must instead have the result be placed in the first part of the array nums. More formally, if there are k elements after removing the duplicates, then the first k elements of nums should hold the final result. It does not matter what you leave beyond the first k elements.
+
+  Return k after placing the final result in the first k slots of nums.
+
+  Do not allocate extra space for another array. You must do this by modifying the input array in-place with O(1) extra memory.
+
+
+  Example 1:
+
+  Input: nums = [1,1,2]
+  Output: 2, nums = [1,2,_]
+  Explanation: Your function should return k = 2, with the first two elements of nums being 1 and 2 respectively.
+  It does not matter what you leave beyond the returned k (hence they are underscores).
+*/
+
+var removeDuplicates = function (nums) {
+  return nums.filter((el, i, arr) => arr.indexOf(el) == i);
+};
+
+console.log(removeDuplicates([1, 1, 2]));
+
+// =========================================================================================
+/*
+  Merge Sorted Array
+
+  You are given two integer arrays nums1 and nums2, sorted in non-decreasing order, and two integers m and n, representing the number of elements in nums1 and nums2 respectively.
+
+  Merge nums1 and nums2 into a single array sorted in non-decreasing order.
+
+  The final sorted array should not be returned by the function, but instead be stored inside the array nums1. To accommodate this, nums1 has a length of m + n, where the first m elements denote the elements that should be merged, and the last n elements are set to 0 and should be ignored. nums2 has a length of n.
+
+  Example 1:
+
+  Input: nums1 = [1,2,3,0,0,0], m = 3, nums2 = [2,5,6], n = 3
+  Output: [1,2,2,3,5,6]
+  Explanation: The arrays we are merging are [1,2,3] and [2,5,6].
+  The result of the merge is [1,2,2,3,5,6] with the underlined elements coming from nums1.
+  Example 2:
+
+  Input: nums1 = [1], m = 1, nums2 = [], n = 0
+  Output: [1]
+  Explanation: The arrays we are merging are [1] and [].
+  The result of the merge is [1].
+  Example 3:
+
+  Input: nums1 = [0], m = 0, nums2 = [1], n = 1
+  Output: [1]
+  Explanation: The arrays we are merging are [] and [1].
+  The result of the merge is [1].
+  Note that because m = 0, there are no elements in nums1. The 0 is only there to ensure the merge result can fit in nums1.
+*/
+
+// 51% Faster Than Other Solution
+var merge = function (nums1, m, nums2, n) {
+  nums2.filter((el) => el != 0);
+  nums2.length = n;
+  for (let i = 0; i < m + n; i++) {
+    if (nums1[i] == 0) {
+      if (nums2.length == 0) return nums1.sort((a, b) => a - b);
+      else {
+        nums1[i] = nums2.pop();
+      }
+    }
+  }
+  return nums1.sort((a, b) => a - b);
+};
+
+console.log(merge([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
+
+// 84% Faster Than Other Solution
+
+let merge2 = function (nums1, m, nums2, n) {
+  for (let i = 0; i < n; i++) {
+    nums1[m + i] = nums2[i];
+  }
+  return nums1.sort((a, b) => a - b);
+};
+
+console.log(merge2([1, 2, 3, 0, 0, 0], 3, [2, 5, 6], 3));
