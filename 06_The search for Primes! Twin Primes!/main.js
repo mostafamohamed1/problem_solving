@@ -62,3 +62,30 @@ console.log(twinPrime(11));
 console.log(twinPrime(12));
 console.log(twinPrime(15));
 console.log(twinPrime(25));
+
+function isPrime(num) {
+  for (let i = 2, s = Math.sqrt(num); i <= s; i++) {
+    if (num % i === 0) return false;
+  }
+  return num > 1;
+}
+
+function twinPrime2(n) {
+  let counter = 0;
+  for (let i = 1; i <= n; i++) {
+    if (isPrime(i - 1) && isPrime(i + 1)) {
+      counter++;
+    }
+  }
+  return counter;
+}
+
+console.log(twinPrime2(-25));
+console.log(twinPrime2(0));
+console.log(twinPrime2(1));
+console.log(twinPrime2(2));
+console.log(twinPrime2(10));
+console.log(twinPrime2(11));
+console.log(twinPrime2(12));
+console.log(twinPrime2(15));
+console.log(twinPrime2(25));
