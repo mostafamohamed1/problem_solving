@@ -47,37 +47,36 @@
 
 function allAlone(house) {
   // Find POTUS
-  let pRow = 0,
-    pCol = 0;
-  for (let r = 0; r < house.length; r++) {
-    for (let c = 0; c < house[r].length; c++) {
-      if (house[r][c] == 'X') {
-        pRow = r;
-        pCol = c;
+  let xRow = 0,
+    xCol = 0;
+  for (let xr = 0; xr < house.length; xr++) {
+    for (let xc = 0; xc < house[xr].length; xc++) {
+      if (house[xr][xc] == 'X') {
+        xRow = xr;
+        xCol = xc;
       }
     }
   }
 
-  let dir = [
-    [-1, 0],
-    [1, 0],
-    [0, -1],
-    [0, 1],
+  let directions = [
+    [-1, 0], // top
+    [1, 0], // bottom
+    [0, -1], // left
+    [0, 1], // right
   ];
 
-  let visited = house.map((row) => row.map((_) => false));
-  console.log(visited);
+  let allFalse = house.map((row) => row.map((_) => false));
 
-  let stack = [[pRow, pCol]];
+  let stack = [[xRow, xCol]];
   while (stack.length) {
     let [currRow, currCol] = stack.pop();
     if (house[currRow][currCol] === 'o') return false;
 
-    visited[currRow][currCol] = true;
-    for (const [dRow, dCol] of dir) {
-      let nextRow = currRow + dRow,
-        nextCol = currCol + dCol;
-      if (!visited[nextRow][nextCol] && house[nextRow][nextCol] !== '#') {
+    allFalse[currRow][currCol] = true;
+    for (const [elfRow, elfCol] of directions) {
+      let nextRow = currRow + elfRow,
+        nextCol = currCol + elfCol;
+      if (!allFalse[nextRow][nextCol] && house[nextRow][nextCol] !== '#') {
         stack.push([nextRow, nextCol]);
       }
     }
