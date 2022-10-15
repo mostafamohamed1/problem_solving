@@ -55,3 +55,14 @@ function decrypt2(encryption) {
 
 console.log(decrypt2('$aaaa#bbb*ccfff!z'));
 console.log(decrypt2('z$aaa#ccc%eee123456789'));
+
+// Solution #3
+function decrypt3(encryption) {
+  return Array.from({ length: 26 }, (_, i) => String.fromCharCode(97 + i)).reduce(
+    (acc, cur) => (acc += encryption.split(cur).length - 1),
+    '',
+  );
+}
+
+console.log(decrypt3('$aaaa#bbb*ccfff!z'));
+console.log(decrypt3('z$aaa#ccc%eee123456789'));
